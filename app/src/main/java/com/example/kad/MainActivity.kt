@@ -5,11 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.kad.ui.theme.KadTheme
 
 
@@ -20,9 +23,23 @@ class MainActivity : ComponentActivity() {
         setContent {
             KadTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TestDeuxBtns(
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    Column (
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(innerPadding) // On applique la marge du Scaffold ici UNE SEULE FOIS
+                            ) {
+
+                        Box(modifier = Modifier.weight(1f)) {
+                            Login()
+                        }
+                        // On donne la moitié de l'écran à chacun (weight = 1)
+                        Box(modifier = Modifier.weight(1f)) {
+                            Buttons()
+                        }
+
+                    }
+
+
                 }
             }
         }
@@ -65,7 +82,7 @@ fun MaPageDeTests(modifier: Modifier = Modifier) {
 }*/
 
 @Composable
-fun TestDeuxBtns(modifier: Modifier = Modifier){
+fun Buttons(modifier: Modifier = Modifier){
     var click by remember { mutableStateOf(value=false) }
     var click2 by remember { mutableStateOf(false) }
 
@@ -97,4 +114,70 @@ fun TestDeuxBtns(modifier: Modifier = Modifier){
             }
         }
     }
+}
+
+
+@Composable
+fun Login(modifier: Modifier = Modifier){
+    var texte by remember {mutableStateOf("")}
+    var texte2 by remember { mutableStateOf("") }
+    var estValide by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(50.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Coucou ma colone ",
+            color = Color.Blue,
+            fontSize = 30.sp, // Space independent pixel : adapt to user params
+        )
+
+        Spacer(modifier = Modifier.height(16.dp)) // espacement bas ?
+
+        OutlinedTextField(
+            value = texte,
+            onValueChange = {
+                texte = it
+                estValide = false
+            }, // it : display le text
+            placeholder = {Text(
+                text ="Enter password")},
+
+        )
+        Button(
+            onClick = {
+                if (texte == "SALUT"){
+                    estValide = true
+                }
+            }
+        ){
+            Text("chack password ")
+        }
+
+        if (estValide) {
+            Spacer(modifier = Modifier.height(4.dp))
+            Text("Mot de passe correct !")
+        }
+        
+        
+        
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        TextField(
+            value= texte2,
+            onValueChange = { texte2 = it },
+            placeholder = { Text("Password 2") },
+        )
+
+        if (texte2 == "123C") {
+            Spacer(modifier = Modifier.height(4.dp))
+            Text("Mot de passe correct !")
+        }
+    }
+
 }
