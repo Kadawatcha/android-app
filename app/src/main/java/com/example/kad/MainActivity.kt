@@ -11,6 +11,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kad.ui.theme.KadTheme
@@ -134,6 +136,8 @@ fun Login(modifier: Modifier = Modifier){
             text = "Coucou ma colone ",
             color = Color.Blue,
             fontSize = 30.sp, // Space independent pixel : adapt to user params
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Start
         )
 
         Spacer(modifier = Modifier.height(16.dp)) // espacement bas ?
